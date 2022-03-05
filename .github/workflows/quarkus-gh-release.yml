@@ -4,8 +4,10 @@
 name: Release quarkus-gh-release-demo
 
 on:
-  release:
-    types: [ published ]
+  # release:
+  #   types: [ published ]
+  push:
+    branches: [ main ]
 
 defaults:
   run:
