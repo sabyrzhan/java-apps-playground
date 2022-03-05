@@ -39,4 +39,8 @@ jobs:
     - name: Build with Maven
       run: |
         echo "Branch is ${GITHUB_REF/refs\/tags\//}"
-        mvn -B release:clean release:prepare release:perform
+        #mvn -B -DskipTests -DskipITs release:clean release:prepare release:perform
+        mvn -B -DskipTests -DskipITs clean install
+    - name: Delete Local Artifacts From Cache
+      shell: bash
+      run: rm -r ~/.m2/repository/kz
