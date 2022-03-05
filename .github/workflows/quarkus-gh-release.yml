@@ -40,6 +40,8 @@ jobs:
         key: cache-${{ steps.get-date.outputs.date }}
     - name: Build with Maven
       run: |
+        git config --global user.email "releasebot@example.com"
+        git config --global user.name "ReleaseBot"
         echo "Branch is ${GITHUB_REF/refs\/tags\//}"
         mvn -B -DskipTests -DskipITs release:clean release:prepare release:perform
         #mvn -B -DskipTests -DskipITs clean install
