@@ -47,10 +47,16 @@ jobs:
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
         git pull
-        git tag -d $TAG
-        git push origin :refs/tags/$TAG
-        mvn -B release:clean release:prepare release:perform
-        git pull && git checkout tags/$TAG
+        ./mvnw versions:set -DnewVersion=$TAG
+        git add .
+        git commit -m "Set version to $TAG"
+        git push -f
+        git checkout main
+        git merge $TAG
+        ./mvnw release:update-versions -B
+        git add .
+        git commit -m "Set next development version"
+        git push -f
         #mvn -B -DskipTests -DskipITs clean install
     - name: Delete Local Artifacts From Cache
       shell: bash
