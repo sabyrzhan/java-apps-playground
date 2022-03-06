@@ -46,7 +46,7 @@ jobs:
         git config --global user.name "ReleaseBot"
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
-        git push --delete origin $TAG
+        git push origin :refs/tags/$TAG
         mvn -B -DskipTests -DskipITs release:clean release:prepare release:perform
         #mvn -B -DskipTests -DskipITs clean install
     - name: Delete Local Artifacts From Cache
