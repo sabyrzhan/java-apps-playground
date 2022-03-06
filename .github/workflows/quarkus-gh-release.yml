@@ -45,6 +45,7 @@ jobs:
       run: |
         git config --global user.email "releasebot@example.com"
         git config --global user.name "ReleaseBot"
+        echo '${{ toJSON(github) }}'
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
         git pull
