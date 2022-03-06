@@ -5,7 +5,7 @@ name: Release quarkus-gh-release-demo
 
 on:
   release:
-    types: [ created ]
+    types: [ published ]
   # push:
   #   tags:
   #     - '[0-9]+.[0-9]+.[0-9]+**'
@@ -45,7 +45,7 @@ jobs:
       run: |
         git config --global user.email "releasebot@example.com"
         git config --global user.name "ReleaseBot"
-        echo '${{ toJSON(github) }}'
+        #echo '${{ toJSON(github) }}'
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
         git pull
@@ -54,20 +54,13 @@ jobs:
         git tag -d $TAG
         git push origin :refs/tags/$TAG
 
-        # Set release version and create tag
-        ./mvnw versions:set -DnewVersion=$TAG
-        git add .
-        git commit -m "Release version $TAG"
-        git tag -a -m "Release $TAG" $TAG
-
-        # Set next development version
-        ./mvnw release:update-versions -B
-        git add .
-        git commit -m "Setting next development version"
-
-        # Push main and tag
-        git push origin main
-        git push origin $TAG
+        # Update versions and push the changes
+        mvn -B release:clean release:prepare release:perform
     - name: Delete Local Artifacts From Cache
       shell: bash
       run: rm -rf ~/.m2/repository/kz
+    - uses: eregon/publish-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        release_id: ${{ github.event.id }}
