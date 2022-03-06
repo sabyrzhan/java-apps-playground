@@ -50,7 +50,7 @@ jobs:
         git pull
         
         # Remove existing tags (local and remote)
-        git tag -d
+        git tag -d $TAG
         git push origin :refs/tags/$TAG
 
         # Set release version and create tag
@@ -60,7 +60,6 @@ jobs:
         git tag -a -m "Release $TAG" $TAG
 
         # Set next development version
-        git checkout main
         ./mvnw release:update-versions -B
         git add .
         git commit -m "Setting next development version"
