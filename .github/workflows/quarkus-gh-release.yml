@@ -44,7 +44,9 @@ jobs:
       run: |
         git config --global user.email "releasebot@example.com"
         git config --global user.name "ReleaseBot"
-        echo "Branch is ${GITHUB_REF/refs\/tags\//}"
+        TAG=${GITHUB_REF/refs\/tags\//}
+        echo "Tag is $TAG"
+        git tag -d $TAG
         mvn -B -DskipTests -DskipITs release:clean release:prepare release:perform
         #mvn -B -DskipTests -DskipITs clean install
     - name: Delete Local Artifacts From Cache
