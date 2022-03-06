@@ -140,6 +140,7 @@
                 <phase>compile</phase>
                 <goals>
                   <goal>clean</goal>
+                  <goal>prepare</goal>
                 </goals>
               </execution>
             </executions>
