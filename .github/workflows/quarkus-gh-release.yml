@@ -46,6 +46,7 @@ jobs:
         git config --global user.name "ReleaseBot"
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
+        git pull --tags
         git tag -l > asdf.txt
         echo "$(cat asdf.txt)"
         git tag -d $TAG
