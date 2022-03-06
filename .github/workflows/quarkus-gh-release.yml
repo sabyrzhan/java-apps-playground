@@ -46,10 +46,7 @@ jobs:
         git config --global user.name "ReleaseBot"
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
-        git pull --tags
-        git tag -l > asdf.txt
-        echo "$(cat asdf.txt)"
-        git tag -d $TAG
+        git push --delete origin $TAG
         mvn -B -DskipTests -DskipITs release:clean release:prepare release:perform
         #mvn -B -DskipTests -DskipITs clean install
     - name: Delete Local Artifacts From Cache
