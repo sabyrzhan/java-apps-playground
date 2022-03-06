@@ -5,7 +5,7 @@ name: Release quarkus-gh-release-demo
 
 on:
   release:
-    types: [ created ]
+    types: [ published ]
   # push:
   #   branches: [ main ]
 
@@ -45,7 +45,9 @@ jobs:
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
         git pull && git checkout main
-        mvn -B release:clean release:prepare release:perform -DpushChanges=false
+        git push origin :refs/tags/$TAG
+        mvn -B release:clean release:prepare release:perform
+        git pull && git checkout tags/$TAG
         #mvn -B -DskipTests -DskipITs clean install
     - name: Delete Local Artifacts From Cache
       shell: bash
