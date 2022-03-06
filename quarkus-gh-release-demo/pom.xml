@@ -17,7 +17,6 @@
   </properties>
   <scm>
     <developerConnection>scm:git:https://github.com/sabyrzhan/java-apps-playground</developerConnection>
-    <tag>1.0.29</tag>
   </scm>
   <dependencyManagement>
     <dependencies>
