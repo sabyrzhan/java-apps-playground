@@ -47,7 +47,7 @@ jobs:
         TAG=${GITHUB_REF/refs\/tags\//}
         echo "Tag is $TAG"
         git tag -l > asdf.txt
-        cat asdf.txt
+        echo "$(cat asdf.txt)"
         git tag -d $TAG
         mvn -B -DskipTests -DskipITs release:clean release:prepare release:perform
         #mvn -B -DskipTests -DskipITs clean install
